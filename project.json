@@ -49,11 +49,19 @@
         "fileName": "TestCase.xaml"
       },
       {
-        "editingStatus": "InProgress",
+        "editingStatus": "Publishable",
         "testCaseId": "97804fc1-6f59-43fa-8295-8a86399f4757",
+        "dataVariationFilePath": ".variations\\TestData_UiBank_Sheet1.json",
         "testCaseType": "TestCase",
         "executionTemplateInvokeIsolated": false,
         "fileName": "TC01_Activate Savings and Checkings accounts.xaml"
+      },
+      {
+        "editingStatus": "Publishable",
+        "testCaseId": "1f4a17e8-6393-4392-91d2-8bdefed6d036",
+        "dataVariationFilePath": ".variations\\Loan Quotes_Loan Quotes.json",
+        "testCaseType": "TestCase",
+        "fileName": "TC02_Loan.xaml"
       }
     ],
     "saveToCloud": false

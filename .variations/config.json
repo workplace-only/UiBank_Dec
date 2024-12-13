@@ -1,0 +1,12 @@
+{
+  "dataVariationFileInfo": [
+    {
+      "filePath": ".variations\\Loan Quotes_Loan Quotes.json",
+      "dataVariationType": "File"
+    },
+    {
+      "filePath": ".variations\\TestData_UiBank_Sheet1.json",
+      "dataVariationType": "File"
+    }
+  ]
+}

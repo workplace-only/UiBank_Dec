@@ -1,7 +1,12 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Activate_Savings_and_Checkings_accounts" this:Activate_Savings_and_Checkings_accounts.in_Username="rishabhs619" this:Activate_Savings_and_Checkings_accounts.in_Password="Test@123" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Activate_Savings_and_Checkings_accounts" this:Activate_Savings_and_Checkings_accounts.in_Username="rishabhs619" this:Activate_Savings_and_Checkings_accounts.in_Password="Test@123" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_Username" Type="InArgument(x:String)" />
     <x:Property Name="in_Password" Type="InArgument(x:String)" />
+    <x:Property Name="in_AccType" Type="InArgument(x:String)" />
+    <x:Property Name="out_CheckingStatus" Type="OutArgument(x:String)" />
+    <x:Property Name="out_SavingStatus" Type="OutArgument(x:String)" />
+    <x:Property Name="in_NickNameChecking" Type="InOutArgument(x:String)" />
+    <x:Property Name="in_NickNameSaving" Type="InOutArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -46,6 +51,11 @@
       <x:String>System.ComponentModel</x:String>
       <x:String>System.Reflection</x:String>
       <x:String>System.Linq.Expressions</x:String>
+      <x:String>UiPath.UIAutomationNext.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Models.CV</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities.Models</x:String>
+      <x:String>UiPath.Testing.Activities</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -102,31 +112,37 @@
       <AssemblyReference>System.Linq.Expressions</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Activate_Savings_and_Checkings_accounts" sap:VirtualizedContainerService.HintSize="875,1198" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Activate_Savings_and_Checkings_accounts" sap:VirtualizedContainerService.HintSize="1282,1887" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence DisplayName="Activate Savings and Checkings accounts" sap:VirtualizedContainerService.HintSize="484,1175" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence DisplayName="Activate Savings and Checkings accounts" sap:VirtualizedContainerService.HintSize="552,1864" sap2010:WorkflowViewState.IdRef="Sequence_2">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Name="str_AccountIDSaving" />
+        <Variable x:TypeArguments="x:String" Name="out_SavingStatus" />
+        <Variable x:TypeArguments="x:String" Name="str_AccountIDChecking" />
+      </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <uix:NApplicationCard AttachMode="ByInstance" DisplayName="Use Application/Browser- UiBank" sap:VirtualizedContainerService.HintSize="450,1092" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="DebuggerApi" OpenMode="IfNotOpen" ScopeGuid="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Version="V2" WindowResize="Maximize">
+      <uix:NApplicationCard AttachMode="ByInstance" DisplayName="Use Application/Browser- UiBank" sap:VirtualizedContainerService.HintSize="518,1781" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="DebuggerApi" OpenMode="IfNotOpen" ScopeGuid="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Version="V2" WindowResize="Maximize">
         <uix:NApplicationCard.Body>
           <ActivityAction x:TypeArguments="x:Object">
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="416,852" sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="416,1479" sap2010:WorkflowViewState.IdRef="Sequence_3">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into- Username" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="382,286" sap2010:WorkflowViewState.IdRef="NTypeInto_1" InteractionMode="Simulate" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Text="[in_Username]" Version="V4">
+              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="None" DisplayName="Type Into- Username" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="382,288" sap2010:WorkflowViewState.IdRef="NTypeInto_1" InteractionMode="Simulate" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Text="[in_Username]" Version="V4">
                 <uix:NTypeInto.Target>
                   <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/login" CVScreenId="965689f3-a885-4ccb-99e4-e6a4704aca34" CvElementArea="446, 314, 473, 57" CvType="InputBox" DesignTimeRectangle="448, 315, 469, 55" DesignTimeScaleFactor="1" ElementType="InputBox" FuzzySelectorArgument="&lt;webctrl id='username' tag='INPUT' type='text' class='form-control uibank-input ng-untouched ng-pristine ng-valid' placeholder='Enter username' aaname='Username' /&gt;" Guid="771e6468-8a7e-4982-bfce-4c7b9c777dd3" InformativeScreenshot="f1e76e36a605ab14cc1cc64d49e65042.png" IsResponsive="True" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Login' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
                     <uix:TargetAnchorable.Anchors>
@@ -147,7 +163,7 @@
                   </uix:VerifyExecutionTypeIntoOptions>
                 </uix:NTypeInto.VerifyOptions>
               </uix:NTypeInto>
-              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into- Password" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="382,286" sap2010:WorkflowViewState.IdRef="NTypeInto_2" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Text="[in_Password]" Version="V4">
+              <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into- Password" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="382,288" sap2010:WorkflowViewState.IdRef="NTypeInto_2" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Text="[in_Password]" Version="V4">
                 <uix:NTypeInto.Target>
                   <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/login" CVScreenId="b925b9bd-d30a-4b5b-86aa-d75ffddad0c5" CvElementArea="446, 409, 473, 55" CvType="InputBox" DesignTimeRectangle="448, 409, 469, 54" DesignTimeScaleFactor="1" ElementType="InputBoxPassword" FuzzySelectorArgument="&lt;webctrl id='password' tag='INPUT' type='password' class='form-control uibank-input ng-untouched ng-pristine ng-valid' placeholder='Enter password' aaname='Password' /&gt;" Guid="99e522f5-0a1a-43a2-bd35-34331d4a2082" InformativeScreenshot="4cdfc3f0768cf266166455b42093d03c.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Login' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
                     <uix:TargetAnchorable.Anchors>
@@ -168,7 +184,7 @@
                   </uix:VerifyExecutionTypeIntoOptions>
                 </uix:NTypeInto.VerifyOptions>
               </uix:NTypeInto>
-              <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click- Sign In" sap:VirtualizedContainerService.HintSize="382,218" sap2010:WorkflowViewState.IdRef="NClick_1" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Version="V4">
+              <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click- Sign In" sap:VirtualizedContainerService.HintSize="382,227" sap2010:WorkflowViewState.IdRef="NClick_1" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Version="V4">
                 <uix:NClick.Target>
                   <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/login" CVScreenId="1abd3b7c-8153-4ae7-b269-bd97910af7a5" CvElementArea="601, 473, 165, 54" CvTextArea="654, 489, 57, 20" CvTextArgument="Sign In" CvType="Button" DesignTimeRectangle="603, 474, 160, 50" DesignTimeScaleFactor="1" ElementType="Button" FuzzySelectorArgument="&lt;webctrl tag='BUTTON' type='submit' class='btn btn-white form-button' aaname='Sign In' check:innerText='Sign In' /&gt;" Guid="db22e39e-c52f-4998-bc21-699106417927" InformativeScreenshot="015ec96ce4575b6c74fa747bb11f5ce3.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Login' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive" />
                 </uix:NClick.Target>
@@ -183,12 +199,333 @@
                   </uix:VerifyExecutionOptions>
                 </uix:NClick.VerifyOptions>
               </uix:NClick>
+              <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click- Apply For New Account" sap:VirtualizedContainerService.HintSize="382,227" sap2010:WorkflowViewState.IdRef="NClick_2" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Version="V4">
+                <uix:NClick.Target>
+                  <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts" CVScreenId="247e6d14-4ec5-4ab0-80b7-4cc0acfcaa61" CvElementArea="689, 334, 346, 54" CvTextArea="766, 352, 192, 19" CvTextArgument="Apply For New Account" CvType="Button" DesignTimeRectangle="691, 336, 342, 50" DesignTimeScaleFactor="1" ElementType="Text" FuzzySelectorArgument="&lt;webctrl aaname='Apply For New Account ' tag='DIV' type='' class='btn btn-white card-header-item' check:innerText='Apply For New Account' /&gt;" Guid="b614d163-47ff-49ab-a3de-f1fed7ec916b" InformativeScreenshot="7718b167f7d435fe04c1a9f6265c776a.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank - Accounts' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive" />
+                </uix:NClick.Target>
+                <uix:NClick.VerifyOptions>
+                  <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                    <uix:VerifyExecutionOptions.Retry>
+                      <InArgument x:TypeArguments="x:Boolean" />
+                    </uix:VerifyExecutionOptions.Retry>
+                    <uix:VerifyExecutionOptions.Timeout>
+                      <InArgument x:TypeArguments="x:Double" />
+                    </uix:VerifyExecutionOptions.Timeout>
+                  </uix:VerifyExecutionOptions>
+                </uix:NClick.VerifyOptions>
+              </uix:NClick>
+              <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="382,57" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <TryCatch.Try>
+                  <Sequence DisplayName="Sequence- Saving Account" sap:VirtualizedContainerService.HintSize="416,1140" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into- NickName" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="382,288" sap2010:WorkflowViewState.IdRef="NTypeInto_5" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Text="[in_NickNameSaving]" Version="V4">
+                      <uix:NTypeInto.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-apply" CVScreenId="b245eb01-9b44-4184-8654-9529d547bd80" CvElementArea="285, 354, 797, 57" CvType="InputBox" DesignTimeRectangle="288, 356, 789, 55" DesignTimeScaleFactor="1" ElementType="InputBox" FuzzySelectorArgument="&lt;webctrl id='accountNickname' tag='INPUT' type='text' class='form-control uibank-input ng-pristine ng-valid ng-touched' placeholder='Enter a nickname for your new account' aaname='Give a Nickname to Your Account' /&gt;" Guid="29a5a7d5-7a2e-46f6-9485-e5527751746d" InformativeScreenshot="5d35005d592dd40318ca4786b0cdbf25.png" IsResponsive="True" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Apply' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="4">
+                              <uix:Target CVScreenId="b245eb01-9b44-4184-8654-9529d547bd80" CvTextArea="286, 339, 190, 11" CvTextArgument="Give a Nickname to Your Account" CvType="Text" DesignTimeRectangle="288, 337, 187, 19" ElementType="Text" FuzzySelectorArgument="&lt;webctrl tag='LABEL' type='' class='uibank-label' aaname='Give a Nickname to Your Account' check:innerText='Give a Nickname to Your Account' /&gt;" Guid="461e6239-b066-435d-84f5-fa13eb4404db" SearchSteps="FuzzySelector, CV" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NTypeInto.Target>
+                      <uix:NTypeInto.VerifyOptions>
+                        <uix:VerifyExecutionTypeIntoOptions DisplayName="{x:Null}" Mode="Appears">
+                          <uix:VerifyExecutionTypeIntoOptions.Retry>
+                            <InArgument x:TypeArguments="x:Boolean" />
+                          </uix:VerifyExecutionTypeIntoOptions.Retry>
+                          <uix:VerifyExecutionTypeIntoOptions.Timeout>
+                            <InArgument x:TypeArguments="x:Double" />
+                          </uix:VerifyExecutionTypeIntoOptions.Timeout>
+                        </uix:VerifyExecutionTypeIntoOptions>
+                      </uix:NTypeInto.VerifyOptions>
+                    </uix:NTypeInto>
+                    <uix:NSelectItem DisplayName="Select Item- Type of Account" sap:VirtualizedContainerService.HintSize="382,190" sap2010:WorkflowViewState.IdRef="NSelectItem_1" Item="Saving" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Version="V4">
+                      <uix:NSelectItem.Items>
+                        <scg:List x:TypeArguments="x:String" Capacity="2">
+                          <x:String>Checking</x:String>
+                          <x:String>Savings</x:String>
+                        </scg:List>
+                      </uix:NSelectItem.Items>
+                      <uix:NSelectItem.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-apply" CVScreenId="21be3f45-8434-49d7-aee6-b661c4bb3dd8" CvElementArea="287, 434, 794, 55" CvType="InputBox" DesignTimeRectangle="288, 435, 789, 54" DesignTimeScaleFactor="1" ElementType="DropDown" FuzzySelectorArgument="&lt;webctrl id='typeOfAccount' tag='SELECT' type='text' class='form-control uibank-input ng-pristine ng-invalid ng-touched' aaname='Type of Account' /&gt;" Guid="2046acf9-86c9-4748-9274-060b665ebf18" InformativeScreenshot="76da582830cf2c5f45a337c47640fede.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Apply' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="4">
+                              <uix:Target CVScreenId="21be3f45-8434-49d7-aee6-b661c4bb3dd8" CvTextArea="286, 418, 93, 14" CvTextArgument="Type of Account" CvType="Text" DesignTimeRectangle="288, 416, 91, 19" ElementType="Text" FuzzySelectorArgument="&lt;webctrl aaname='Type of Account' tag='LABEL' type='' class='uibank-label' check:innerText='Type of Account' /&gt;" Guid="0a5fa5a3-5941-42b6-bc6f-9e33cc8759de" SearchSteps="FuzzySelector, CV" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NSelectItem.Target>
+                    </uix:NSelectItem>
+                    <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click- Apply" sap:VirtualizedContainerService.HintSize="382,227" sap2010:WorkflowViewState.IdRef="NClick_3" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Version="V4">
+                      <uix:NClick.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-apply" CVScreenId="72ae78b3-d62a-4afd-a6a0-344de5276349" CvElementArea="440, 519, 485, 54" CvTextArea="657, 537, 51, 19" CvTextArgument="Apply" CvType="Button" DesignTimeRectangle="443, 521, 480, 50" DesignTimeScaleFactor="1" ElementType="Button" FuzzySelectorArgument="&lt;webctrl tag='BUTTON' type='submit' class='btn text-center btn-white form-button btn-xl' aaname='Apply' check:innerText='Apply' /&gt;" Guid="96f0dab2-ff47-4072-9855-9388760b4279" InformativeScreenshot="d684dd63b4a0b839eaaea2ceb5bfd05b.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Apply' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive" />
+                      </uix:NClick.Target>
+                      <uix:NClick.VerifyOptions>
+                        <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                          <uix:VerifyExecutionOptions.Retry>
+                            <InArgument x:TypeArguments="x:Boolean" />
+                          </uix:VerifyExecutionOptions.Retry>
+                          <uix:VerifyExecutionOptions.Timeout>
+                            <InArgument x:TypeArguments="x:Double" />
+                          </uix:VerifyExecutionOptions.Timeout>
+                        </uix:VerifyExecutionOptions>
+                      </uix:NClick.VerifyOptions>
+                    </uix:NClick>
+                    <uix:NGetText DisplayName="Get Text- Approval Status" sap:VirtualizedContainerService.HintSize="382,190" sap2010:WorkflowViewState.IdRef="NGetText_2" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" TextString="[out_SavingStatus]" Version="V4">
+                      <uix:NGetText.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-create-results/40703704/dummy01" CVScreenId="07155eb0-081d-4917-9ba1-f00b989fdc95" CvTextArea="472, 315, 419, 53" CvType="AnyWordGroup" DesignTimeRectangle="256, 311, 853, 58" DesignTimeScaleFactor="1" ElementType="Text" FuzzySelectorArgument="&lt;webctrl tag='H1' type='' class='text-center text-white header' /&gt;" Guid="c3225f0b-ac8b-4b14-beba-a6c2697e19f8" InformativeScreenshot="1237754c0e1fe9b688a8c2d3d0dd168a.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Creation Result' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="4">
+                              <uix:Target CVScreenId="07155eb0-081d-4917-9ba1-f00b989fdc95" CvTextArea="531, 377, 301, 14" CvTextArgument="You've been approved for a new account!" CvType="Text" DesignTimeRectangle="256, 377, 853, 19" ElementType="Text" FuzzySelectorArgument="&lt;webctrl tag='H4' type='' class='text-center text-white small-text' aaname=' You&amp;apos;ve been approved for a new account! ' check:innerText='You&amp;apos;ve been approved for a new account!' /&gt;" Guid="f79e50b6-422f-4261-b552-ad4773a7cdec" SearchSteps="FuzzySelector, CV" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NGetText.Target>
+                    </uix:NGetText>
+                    <uix:NGetText DisplayName="Get Text- Account ID" sap:VirtualizedContainerService.HintSize="382,183" sap2010:WorkflowViewState.IdRef="NGetText_5" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" TextString="[str_AccountIDSaving]" Version="V4">
+                      <uix:NGetText.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-create-results/51345134/dummy97" CVScreenId="9c9c52f9-4570-4dd0-afac-4b7c2a4c13f1" CvTextArea="735, 439, 62, 14" CvType="AnyWordGroup" DesignTimeRectangle="736, 437, 61, 22" DesignTimeScaleFactor="1" ElementType="Text" FuzzySelectorArgument="&lt;webctrl id='accountId' tag='SPAN' type='' class='text-white small-text' /&gt;" Guid="51f14937-bc5a-400a-be43-29e76a5f6fc2" InformativeScreenshot="15d8bd7917df9e79bd6534fe984070ce.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Creation Result' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                              <uix:Target CVScreenId="9c9c52f9-4570-4dd0-afac-4b7c2a4c13f1" CvTextArea="471, 327, 420, 52" CvTextArgument="Congratulations!" CvType="Text" DesignTimeRectangle="256, 322, 853, 58" ElementType="Text" FuzzySelectorArgument="&lt;webctrl tag='H1' type='' class='text-center text-white header' aaname=' Congratulations! ' check:innerText='Congratulations!' /&gt;" Guid="fbcf37f1-4ba4-43f9-937c-88469bcf7fcd" SearchSteps="FuzzySelector, CV" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NGetText.Target>
+                    </uix:NGetText>
+                  </Sequence>
+                </TryCatch.Try>
+                <TryCatch.Catches>
+                  <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="420,23" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ActivityAction x:TypeArguments="s:Exception">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                      </ActivityAction.Argument>
+                      <Throw Exception="[new BusinessRuleException(&quot;Failed Creating Saving Account&quot;)]" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="Throw_1">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Throw>
+                    </ActivityAction>
+                  </Catch>
+                </TryCatch.Catches>
+              </TryCatch>
+              <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="382,57" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+                <ui:CommentOut.Body>
+                  <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="416,337" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into- Type of Account" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="382,277" sap2010:WorkflowViewState.IdRef="NTypeInto_4" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Text="[in_AccType]" Version="V4">
+                      <uix:NTypeInto.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-apply" CVScreenId="b245eb01-9b44-4184-8654-9529d547bd80" CvElementArea="287, 434, 794, 55" CvType="InputBox" DesignTimeRectangle="288, 435, 789, 54" DesignTimeScaleFactor="1" ElementType="DropDown" FuzzySelectorArgument="&lt;webctrl id='typeOfAccount' tag='SELECT' type='text' class='form-control uibank-input ng-untouched ng-pristine ng-invalid' aaname='Type of Account' /&gt;" Guid="e6cded52-8851-40de-99b8-6d95b4b337e8" InformativeScreenshot="eb753dd0941b03b91650b717ebcc3123.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Apply' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="4">
+                              <uix:Target CVScreenId="b245eb01-9b44-4184-8654-9529d547bd80" CvTextArea="286, 418, 93, 14" CvTextArgument="Type of Account" CvType="Text" DesignTimeRectangle="288, 416, 91, 19" ElementType="Text" FuzzySelectorArgument="&lt;webctrl aaname='Type of Account' tag='LABEL' type='' class='uibank-label' check:innerText='Type of Account' /&gt;" Guid="a4c2d4b2-ce87-4d01-b670-ffdb721f479d" SearchSteps="FuzzySelector, CV" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NTypeInto.Target>
+                      <uix:NTypeInto.VerifyOptions>
+                        <uix:VerifyExecutionTypeIntoOptions DisplayName="{x:Null}" Mode="Appears">
+                          <uix:VerifyExecutionTypeIntoOptions.Retry>
+                            <InArgument x:TypeArguments="x:Boolean" />
+                          </uix:VerifyExecutionTypeIntoOptions.Retry>
+                          <uix:VerifyExecutionTypeIntoOptions.Timeout>
+                            <InArgument x:TypeArguments="x:Double" />
+                          </uix:VerifyExecutionTypeIntoOptions.Timeout>
+                        </uix:VerifyExecutionTypeIntoOptions>
+                      </uix:NTypeInto.VerifyOptions>
+                    </uix:NTypeInto>
+                  </Sequence>
+                </ui:CommentOut.Body>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </ui:CommentOut>
+              <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click- View Your Accounts" sap:VirtualizedContainerService.HintSize="382,227" sap2010:WorkflowViewState.IdRef="NClick_4" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Version="V4">
+                <uix:NClick.Target>
+                  <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-create-results/35721763/Dummy99" CVScreenId="a9c098a4-4dbe-4fcc-9222-98bc26c8b0a5" CvElementArea="576, 514, 212, 52" CvTextArea="599, 531, 166, 15" CvTextArgument="View Your Accounts" CvType="Button" DesignTimeRectangle="578, 515, 209, 50" DesignTimeScaleFactor="1" ElementType="Text" FuzzySelectorArgument="&lt;webctrl id='viewAccounts' tag='DIV' type='' class='text-center btn btn-white form-button' aaname=' View Your Accounts ' check:innerText='View Your Accounts' /&gt;" Guid="1028ba3c-bb9f-4245-beb3-4e7c387e8a4a" InformativeScreenshot="6ecddf997e94ae90e59121120895a4bc.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Creation Result' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive" />
+                </uix:NClick.Target>
+                <uix:NClick.VerifyOptions>
+                  <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                    <uix:VerifyExecutionOptions.Retry>
+                      <InArgument x:TypeArguments="x:Boolean" />
+                    </uix:VerifyExecutionOptions.Retry>
+                    <uix:VerifyExecutionOptions.Timeout>
+                      <InArgument x:TypeArguments="x:Double" />
+                    </uix:VerifyExecutionOptions.Timeout>
+                  </uix:VerifyExecutionOptions>
+                </uix:NClick.VerifyOptions>
+              </uix:NClick>
+              <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="382,48" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <TryCatch.Try>
+                  <Sequence DisplayName="Sequence- Checking Account" sap:VirtualizedContainerService.HintSize="416,1363" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click- Apply For New Account" sap:VirtualizedContainerService.HintSize="382,227" sap2010:WorkflowViewState.IdRef="NClick_5" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Version="V4">
+                      <uix:NClick.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts" CVScreenId="43299dce-e724-4f73-9f4a-14134577a470" CvElementArea="689, 335, 346, 54" CvTextArea="766, 352, 192, 19" CvTextArgument="Apply For New Account" CvType="Button" DesignTimeRectangle="691, 336, 342, 50" DesignTimeScaleFactor="1" ElementType="Text" FuzzySelectorArgument="&lt;webctrl aaname='Apply For New Account ' tag='DIV' type='' class='btn btn-white card-header-item' check:innerText='Apply For New Account' /&gt;" Guid="00b1fd24-38ee-4788-b6c5-d5e895b13310" InformativeScreenshot="0c22241194a211555e54edc13bbc0501.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank - Accounts' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive" />
+                      </uix:NClick.Target>
+                      <uix:NClick.VerifyOptions>
+                        <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                          <uix:VerifyExecutionOptions.Retry>
+                            <InArgument x:TypeArguments="x:Boolean" />
+                          </uix:VerifyExecutionOptions.Retry>
+                          <uix:VerifyExecutionOptions.Timeout>
+                            <InArgument x:TypeArguments="x:Double" />
+                          </uix:VerifyExecutionOptions.Timeout>
+                        </uix:VerifyExecutionOptions>
+                      </uix:NClick.VerifyOptions>
+                    </uix:NClick>
+                    <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into- NickName" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="382,288" sap2010:WorkflowViewState.IdRef="NTypeInto_6" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Text="[in_NickNameChecking]" Version="V4">
+                      <uix:NTypeInto.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-apply" CVScreenId="b245eb01-9b44-4184-8654-9529d547bd80" CvElementArea="285, 354, 797, 57" CvType="InputBox" DesignTimeRectangle="288, 356, 789, 55" DesignTimeScaleFactor="1" ElementType="InputBox" FuzzySelectorArgument="&lt;webctrl id='accountNickname' tag='INPUT' type='text' class='form-control uibank-input ng-pristine ng-valid ng-touched' placeholder='Enter a nickname for your new account' aaname='Give a Nickname to Your Account' /&gt;" Guid="29a5a7d5-7a2e-46f6-9485-e5527751746d" InformativeScreenshot="5d35005d592dd40318ca4786b0cdbf25.png" IsResponsive="True" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Apply' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                              <uix:Target CVScreenId="b245eb01-9b44-4184-8654-9529d547bd80" CvTextArea="286, 339, 190, 11" CvTextArgument="Give a Nickname to Your Account" CvType="Text" DesignTimeRectangle="288, 337, 187, 19" ElementType="Text" FuzzySelectorArgument="&lt;webctrl tag='LABEL' type='' class='uibank-label' aaname='Give a Nickname to Your Account' check:innerText='Give a Nickname to Your Account' /&gt;" Guid="461e6239-b066-435d-84f5-fa13eb4404db" SearchSteps="FuzzySelector, CV" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NTypeInto.Target>
+                      <uix:NTypeInto.VerifyOptions>
+                        <uix:VerifyExecutionTypeIntoOptions DisplayName="{x:Null}" Mode="Appears">
+                          <uix:VerifyExecutionTypeIntoOptions.Retry>
+                            <InArgument x:TypeArguments="x:Boolean" />
+                          </uix:VerifyExecutionTypeIntoOptions.Retry>
+                          <uix:VerifyExecutionTypeIntoOptions.Timeout>
+                            <InArgument x:TypeArguments="x:Double" />
+                          </uix:VerifyExecutionTypeIntoOptions.Timeout>
+                        </uix:VerifyExecutionTypeIntoOptions>
+                      </uix:NTypeInto.VerifyOptions>
+                    </uix:NTypeInto>
+                    <uix:NSelectItem DisplayName="Select Item- Type of Account" sap:VirtualizedContainerService.HintSize="382,190" sap2010:WorkflowViewState.IdRef="NSelectItem_2" Item="Checking" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Version="V4">
+                      <uix:NSelectItem.Items>
+                        <scg:List x:TypeArguments="x:String" Capacity="2">
+                          <x:String>Checking</x:String>
+                          <x:String>Savings</x:String>
+                        </scg:List>
+                      </uix:NSelectItem.Items>
+                      <uix:NSelectItem.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-apply" CVScreenId="21be3f45-8434-49d7-aee6-b661c4bb3dd8" CvElementArea="287, 434, 794, 55" CvType="InputBox" DesignTimeRectangle="288, 435, 789, 54" DesignTimeScaleFactor="1" ElementType="DropDown" FuzzySelectorArgument="&lt;webctrl id='typeOfAccount' tag='SELECT' type='text' class='form-control uibank-input ng-pristine ng-invalid ng-touched' aaname='Type of Account' /&gt;" Guid="2046acf9-86c9-4748-9274-060b665ebf18" InformativeScreenshot="76da582830cf2c5f45a337c47640fede.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Apply' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                              <uix:Target CVScreenId="21be3f45-8434-49d7-aee6-b661c4bb3dd8" CvTextArea="286, 418, 93, 14" CvTextArgument="Type of Account" CvType="Text" DesignTimeRectangle="288, 416, 91, 19" ElementType="Text" FuzzySelectorArgument="&lt;webctrl aaname='Type of Account' tag='LABEL' type='' class='uibank-label' check:innerText='Type of Account' /&gt;" Guid="0a5fa5a3-5941-42b6-bc6f-9e33cc8759de" SearchSteps="FuzzySelector, CV" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NSelectItem.Target>
+                    </uix:NSelectItem>
+                    <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click- Apply" sap:VirtualizedContainerService.HintSize="382,227" sap2010:WorkflowViewState.IdRef="NClick_6" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" Version="V4">
+                      <uix:NClick.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-apply" CVScreenId="72ae78b3-d62a-4afd-a6a0-344de5276349" CvElementArea="440, 519, 485, 54" CvTextArea="657, 537, 51, 19" CvTextArgument="Apply" CvType="Button" DesignTimeRectangle="443, 521, 480, 50" DesignTimeScaleFactor="1" ElementType="Button" FuzzySelectorArgument="&lt;webctrl tag='BUTTON' type='submit' class='btn text-center btn-white form-button btn-xl' aaname='Apply' check:innerText='Apply' /&gt;" Guid="96f0dab2-ff47-4072-9855-9388760b4279" InformativeScreenshot="d684dd63b4a0b839eaaea2ceb5bfd05b.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Apply' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive" />
+                      </uix:NClick.Target>
+                      <uix:NClick.VerifyOptions>
+                        <uix:VerifyExecutionOptions DisplayName="{x:Null}" Mode="Appears">
+                          <uix:VerifyExecutionOptions.Retry>
+                            <InArgument x:TypeArguments="x:Boolean" />
+                          </uix:VerifyExecutionOptions.Retry>
+                          <uix:VerifyExecutionOptions.Timeout>
+                            <InArgument x:TypeArguments="x:Double" />
+                          </uix:VerifyExecutionOptions.Timeout>
+                        </uix:VerifyExecutionOptions>
+                      </uix:NClick.VerifyOptions>
+                    </uix:NClick>
+                    <uix:NGetText DisplayName="Get Text- Approval Status" sap:VirtualizedContainerService.HintSize="382,190" sap2010:WorkflowViewState.IdRef="NGetText_3" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" TextString="[out_CheckingStatus]" Version="V4">
+                      <uix:NGetText.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-create-results/40703704/dummy01" CVScreenId="07155eb0-081d-4917-9ba1-f00b989fdc95" CvTextArea="472, 315, 419, 53" CvType="AnyWordGroup" DesignTimeRectangle="256, 311, 853, 58" DesignTimeScaleFactor="1" ElementType="Text" FuzzySelectorArgument="&lt;webctrl tag='H1' type='' class='text-center text-white header' /&gt;" Guid="c3225f0b-ac8b-4b14-beba-a6c2697e19f8" InformativeScreenshot="1237754c0e1fe9b688a8c2d3d0dd168a.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Creation Result' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                              <uix:Target CVScreenId="07155eb0-081d-4917-9ba1-f00b989fdc95" CvTextArea="531, 377, 301, 14" CvTextArgument="You've been approved for a new account!" CvType="Text" DesignTimeRectangle="256, 377, 853, 19" ElementType="Text" FuzzySelectorArgument="&lt;webctrl tag='H4' type='' class='text-center text-white small-text' aaname=' You&amp;apos;ve been approved for a new account! ' check:innerText='You&amp;apos;ve been approved for a new account!' /&gt;" Guid="f79e50b6-422f-4261-b552-ad4773a7cdec" SearchSteps="FuzzySelector, CV" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NGetText.Target>
+                    </uix:NGetText>
+                    <uix:NGetText DisplayName="Get Text- Account ID" sap:VirtualizedContainerService.HintSize="382,181" sap2010:WorkflowViewState.IdRef="NGetText_4" ScopeIdentifier="716c20aa-401d-4c93-b2c9-0c37567b6b2d" TextString="[str_AccountIDChecking]" Version="V4">
+                      <uix:NGetText.Target>
+                        <uix:TargetAnchorable BrowserURL="https://uibank.uipath.com/accounts/account-create-results/51345134/dummy97" CVScreenId="9c9c52f9-4570-4dd0-afac-4b7c2a4c13f1" CvTextArea="735, 439, 62, 14" CvType="AnyWordGroup" DesignTimeRectangle="736, 437, 61, 22" DesignTimeScaleFactor="1" ElementType="Text" FuzzySelectorArgument="&lt;webctrl id='accountId' tag='SPAN' type='' class='text-white small-text' /&gt;" Guid="51f14937-bc5a-400a-be43-29e76a5f6fc2" InformativeScreenshot="15d8bd7917df9e79bd6534fe984070ce.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='UiBank-Creation Result' /&gt;" SearchSteps="FuzzySelector, CV" Version="V4" Visibility="Interactive">
+                          <uix:TargetAnchorable.Anchors>
+                            <scg:List x:TypeArguments="uix:ITarget" Capacity="4">
+                              <uix:Target CVScreenId="9c9c52f9-4570-4dd0-afac-4b7c2a4c13f1" CvTextArea="471, 327, 420, 52" CvTextArgument="Congratulations!" CvType="Text" DesignTimeRectangle="256, 322, 853, 58" ElementType="Text" FuzzySelectorArgument="&lt;webctrl tag='H1' type='' class='text-center text-white header' aaname=' Congratulations! ' check:innerText='Congratulations!' /&gt;" Guid="fbcf37f1-4ba4-43f9-937c-88469bcf7fcd" SearchSteps="FuzzySelector, CV" />
+                            </scg:List>
+                          </uix:TargetAnchorable.Anchors>
+                        </uix:TargetAnchorable>
+                      </uix:NGetText.Target>
+                    </uix:NGetText>
+                  </Sequence>
+                </TryCatch.Try>
+                <TryCatch.Catches>
+                  <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="420,23" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ActivityAction x:TypeArguments="s:Exception">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                      </ActivityAction.Argument>
+                      <Throw Exception="[new BusinessRuleException(&quot;Failed Creating Checking Account&quot;)]" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="Throw_2">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Throw>
+                    </ActivityAction>
+                  </Catch>
+                </TryCatch.Catches>
+              </TryCatch>
             </Sequence>
           </ActivityAction>
         </uix:NApplicationCard.Body>
         <uix:NApplicationCard.TargetApp>
           <uix:TargetApp Area="-8, -8, 1382, 744" BrowserType="Chrome" IconBase64="iVBORw0KGgoAAAANSUhEUgAAAJkAAACZCAMAAAALgmiIAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABgUExURfpGFvyMbv////7Rxf/z8PtpQv/5+PyumfyAX/x1UftjO/7WzP3Lvf25p/7o4vtdM/2/r/2dhPx6WP2zoPtXLP7u6fpMHf7i2vtvSfyokf7c0/yGZvpSJf2XfP3Ftvyiiq2qGj8AAAMzSURBVHhe7ZvZcqMwEEUJeMMexx7v8fr/fxnAF4O6JRNVSaOZmntekrQIfQxCkqHJHn8rGSGEEEIIqbhhdZSADyg4+MyTUUDBAc0s0MwfmvlDM39o5g/N/EluNiom+E2Q1my7abJstvi7T0qz4wlZsux0RKwjodn2gCQNX4i+SGd2NsSybIF4SzKzyRgpWubiSkhm9oUMHeJ8JjPren/LCi0gmdkVGXqYyVKZ7ZGgT4G2J15mi8JkhLiLI7Zr6Q1atrxLtD3xMlsh2mJ+SI38MvuBeMUZoT6/0PYklVkuRrMac0RLZiaHsyy7mgNaMrMbYh0XtIBkZiO5s+seLSCZmcpsXpkpzcT8JM5lUrN8MUe8mpnMEaMmpVk+mc5quflsallxJzVrOOOnJL2ZC5o10Ixmdv5LsyFtmjXQjGZ2aFZBswaa0QzQrIFmNLNDswqaNdCMZoBmDTSjmR3TrLt//0Q+9pD8ObMS0RZfsxviDUHNZoi2PBB3IT+JsX1QM7kzXzOj/CeomXy5Te5M8rZfBjWT1R9jxB2MsNkL41oOarZEtOXgKB0Dat/Gg/KgZndEX7ieZj2ZYqsXxlPfoGbq9KjSLINn2VuHWV4T1EwVDMwRt7KXhQ9m7rBmqmBAFo31USfTHJjDmslLQD/97lAFZmJnYc0+Ee64o0Wj3uwVVVxhzdRqI9u5Bo6jKq8RqQOb6cqUsb2g6lN9Bnl4A5vp02lXs4jJCSOwmVpuVKzWaOvY7tDWY4q2ltBmtrqx7HTv97bJWs7kNapDhjazVGfVHGbLojjn56KYypEfyEMW3kzNnT/joHpjcDO1HPwZ6pBFMNtbevcgMm1FeLOhf7EhK59rIpjpeWeIg66xj2Pm3dWsk2sUs5FjZLBz0CNxTRQzvds37BxruEhmliJ6B2NR8vkillm+thQRW7g4v15FM8v3t2G38s3donhm1VJnoLed3t7FimlWrTwu7uO2cS/EG+KaVSx+W1Yf85uxLrIS3axiv348NmVZzaerspw9HkvX5WhwxxvxLfIQhzCLA838oZk/NPOHZv7QzB+a+UMzf2jmzz9rdiqTYb+5SQghhJBBsuwbfx+VBGVWUxIAAAAASUVORK5CYII=" sap2010:WorkflowViewState.IdRef="TargetApp_1" InformativeScreenshot="b944691e9e7a1e1fbbc71d00621bce28.jpg" Selector="&lt;html app='chrome.exe' title='UiBank - Accounts' /&gt;" Title="UiBank - Accounts" Url="https://uibank.uipath.com/login" />
         </uix:NApplicationCard.TargetApp>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
       </uix:NApplicationCard>
     </Sequence>
   </Sequence>
